@@ -39,24 +39,4 @@ router.get('/users', async function (req, res) {
   res.send(users)
 })
 
-router.get('/users/:id', async function (req, res) {
-  const user = await User.findById(req.params.id)
-
-  if (!user) return res.sendStatus(404)
-
-  res.send(user)
-})
-
-router.post('/users/', async function (req, res) {
-  const newUser = await User.create(req.body)
-
-  res.send(newUser)
-})
-
-router.delete('/users/:id', async function (req, res) {
-  await User.findByIdAndDelete(req.params.id)
-
-  res.sendStatus(200)
-})
-
 module.exports = router
