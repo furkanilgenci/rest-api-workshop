@@ -1,7 +1,7 @@
 const express = require('express')
-const router = express.Router()
 const User = require('../models/user')
 
+const router = express.Router()
 /*
  GET    -> get resource(s)
  POST   -> create a new resource
@@ -33,13 +33,13 @@ Response has:
 */
 
 // CRUD Operations (Creat, read, update and delete)
-router.get('/users', async function (req, res, next) {
+router.get('/', async function (req, res, next) {
   const users = await User.find({})
 
   res.send(users)
 })
 
-router.get('/users/:id', async function (req, res) {
+router.get('/:id', async function (req, res) {
   const user = await User.findById(req.params.id)
 
   if(!user) {
@@ -50,7 +50,7 @@ router.get('/users/:id', async function (req, res) {
   res.send(user)
 })
 
-router.post('/users', async function (req, res) {
+router.post('/', async function (req, res) {
   const { name, email, age } = req.body
 
   const user = await User.create({
@@ -62,7 +62,7 @@ router.post('/users', async function (req, res) {
   res.send(user)
 })
 
-router.delete('/users/:id', async function (req, res) {
+router.delete('/:id', async function (req, res) {
   await User.findByIdAndDelete(req.params.id)
 
   res.sendStatus(200)
