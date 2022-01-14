@@ -50,6 +50,11 @@ router.get('/:id', async function (req, res) {
   res.send(user)
 })
 
+router.patch('/:id', async function (req, res) {
+  const user = await User.findByIdAndUpdate(req.params.id, { name: req.body.name })
+  res.send(user)
+})
+
 router.post('/', async function (req, res) {
   const { name, email, age } = req.body
   
