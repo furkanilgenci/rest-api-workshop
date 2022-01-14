@@ -52,6 +52,13 @@ router.get('/:id', async function (req, res) {
 
 router.post('/', async function (req, res) {
   const { name, email, age } = req.body
+  
+  if (!email || !name || !age) {
+    res.send({
+      message: 'Missing fields.'
+    }).status(400)
+    return
+  }
 
   const user = await User.create({
     name,
