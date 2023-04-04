@@ -1,10 +1,10 @@
-const express = require('express')
+const express = require("express");
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.set('Content-Type', 'text/html');
-    res.send(`
+router.get("/", (req, res) => {
+  res.set("Content-Type", "text/html");
+  res.send(`
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
                 const renderUser = user => \`
                 <div class="card border-primary mb-3" style="max-width: 18rem;">
-                    <div class="card-header">\${user._id}</div>
+                    <div class="card-header">\${user.id}</div>
                     <div class="card-body">
                         <h5 class="card-title text-primary">\${user.name} (\${user.age})</h5>
                         <p class="card-text text-secondary">\${user.email}</p>
@@ -35,8 +35,7 @@ router.get('/', (req, res) => {
                 setInterval(fetchAndRenderUsers, 1000)
             </script>
         </body>
-        </html>`
-    )
-})
+        </html>`);
+});
 
 module.exports = router;

@@ -1,7 +1,7 @@
-const express = require('express')
-const User = require('../models/user')
+const express = require("express");
+const User = require("../models/user");
 
-const router = express.Router()
+const router = express.Router();
 /*
  GET    -> get resource(s)
  POST   -> create a new resource
@@ -32,52 +32,31 @@ Response has:
 * status code
 */
 
-// CRUD Operations (Creat, read, update and delete)
-router.get('/', async function (req, res, next) {
-  const users = await User.find({})
+router.get("/", (req, res) => {
+  const users = User.getAll(); // mock
 
-  res.send(users)
-})
+  res.status(200).send(users);
+});
 
-router.get('/:id', async function (req, res) {
-  const user = await User.findById(req.params.id)
+router.post("/", (req, res) => {
+  const { name, age, email } = req.body;
 
-  if(!user) {
-    res.sendStatus(404)
-    return
+  if (!name || !age || !email) {
+    res.sendStatus(400);
+    return;
   }
 
-  res.send(user)
-})
+  User.createOne({ email, name, age }); // mock
 
-router.patch('/:id', async function (req, res) {
-  const user = await User.findByIdAndUpdate(req.params.id, { name: req.body.name })
-  res.send(user)
-})
+  res.sendStatus(201);
+});
 
-router.post('/', async function (req, res) {
-  const { name, email, age } = req.body
-  
-  if (!email || !name || !age) {
-    res.send({
-      message: 'Missing fields.'
-    }).status(400)
-    return
-  }
+router.delete("/:id", (req, res) => {
+  const id = req.params;
 
-  const user = await User.create({
-    name,
-    email,
-    age,
-  })
+  User.findByIdAndDelete(id); // mock
 
-  res.send(user)
-})
+  res.sendStatus(204);
+});
 
-router.delete('/:id', async function (req, res) {
-  await User.findByIdAndDelete(req.params.id)
-
-  res.sendStatus(200)
-})
-
-module.exports = router
+module.exports = router;
